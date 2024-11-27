@@ -7,8 +7,8 @@ This project is an integration with Google's Gemini API and programmed to respon
 ### 1. Clone repo
 
 ```shell
-git clone https://github.com/openai/openai-assistants-quickstart.git
-cd openai-assistants-quickstart
+git clone https://github.com/tjortiz17/baymax-bot
+cd baymax-bot
 ```
 
 ### 2. Set your [Gemini API key](https://aistudio.google.com/app/apikey)
