@@ -16,13 +16,13 @@ export async function getResponse(chatHistory) {
   //set chat history
   const history = await remapHistory(chatHistory);
   const chat = baymax.startChat({ history });
-  console.log(chat);
 
   const result = await chat.sendMessage(message);
   const response = result.response;
   return response.text();
 }
 
+// map chat history to proper format expected by Gemini
 export async function remapHistory(chatHistory) {
   const remappedHistory = [];
   for(let i = 0; i < chatHistory.length - 1; i++){
@@ -33,16 +33,3 @@ export async function remapHistory(chatHistory) {
   }
   return remappedHistory;
 }
-
-// export async function getResponse(text) {
-//   console.log(chat);
-//   let result = await chat.sendMessage(text);
-//   let response = result.response.text();
-//   return response;
-// };
-
-/*
-  in an async function here, I'll need to have a function that takes in the user text and chat history
-  and either start a new chat every time a message is sent or just get a response based on the history
-  and then return that back to the client chat component
-*/
