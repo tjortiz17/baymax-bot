@@ -3,20 +3,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./chat.module.css";
 import Markdown from "react-markdown";
-// @ts-expect-error - no types for this yet
+import { getResponse } from "../api/actions";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const key = process.env.NEXT_PUBLIC_API_KEY;
-const genAI = new GoogleGenerativeAI(key);
-const baymax = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-  systemInstruction: "You are the character Baymax from the movie Big Hero Six. Please introduce yourself with your name and that you are a personal healthcare companion. Please act and respond as Baymax would in a Markdown format."
-});
-const chat = baymax.startChat();
+// const baymax = genAI.getGenerativeModel({
+//   model: "gemini-1.5-flash",
+//   systemInstruction: "You are the character Baymax from the movie Big Hero Six. Please introduce yourself with your name and that you are a personal healthcare companion. Please act and respond as Baymax would in a Markdown format."
+// });
+// const chat = baymax.startChat();
 
 type MessageProps = {
-  role: "user" | "baymax";// | "code";
-  text: string;
+  author: "user" | "model";
+  content: string;
 };
 
 const UserMessage = ({ text }: { text: string }) => {
@@ -44,12 +42,12 @@ const BaymaxMessage = ({ text }: { text: string }) => {
 //   );
 // };
 
-const Message = ({ role, text }: MessageProps) => {
-  switch (role) {
+const Message = ({ author, content }: MessageProps) => {
+  switch (author) {
     case "user":
-      return <UserMessage text={text} />;
-    case "baymax":
-      return <BaymaxMessage text={text} />;
+      return <UserMessage text={content} />;
+    case "model":
+      return <BaymaxMessage text={content} />;
     // case "code":
     //   return <CodeMessage text={text} />;
     default:
@@ -67,6 +65,18 @@ const Chat = () => {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
+
+  //console.log(chat);
+  // console.log(key);
+  // const genAi = new GoogleGenerativeAI(key);
+  // //console.log(genAi)
+  // const baymax = genAi.getGenerativeModel({
+  //     model: "gemini-1.5-flash",
+  //     systemInstruction: "You are the character Baymax from the movie Big Hero Six. Please introduce yourself with your name and that you are a personal healthcare companion. Please act and respond as Baymax would in a Markdown format."
+  //   });
+  // //console.log(baymax)
+  // const chat = baymax.startChat();
+  //console.log(chat);
   //const [threadId, setThreadId] = useState("");
 
   // automatically scroll to bottom of chat
@@ -90,12 +100,17 @@ const Chat = () => {
   //   createThread();
   // }, []);
 
-  const sendMessage = async (text) => {
-    let result = await chat.sendMessage(text);
-    let response = result.response.text();
+  const sendMessage = async (userText) => {
+    const chatHistory = [
+      ...messages,
+      { author: "user", content: userText },
+    ];
+    console.log(chatHistory)
+    let response = await getResponse(chatHistory);
+    // let response = result.response.text();
     setMessages((prevMessages) => [
       ...prevMessages,
-      { role: "baymax", text: response },
+      { author: "model", content: response },
     ]);
     setInputDisabled(false);
     scrollToBottom();
@@ -122,11 +137,11 @@ const Chat = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!userInput.trim()) return;
-    sendMessage(userInput);
     setMessages((prevMessages) => [
       ...prevMessages,
-      { role: "user", text: userInput },
+      { author: "user", content: userInput },
     ]);
+    sendMessage(userInput);
     setUserInput("");
     setInputDisabled(true);
     scrollToBottom();
@@ -253,7 +268,7 @@ const Chat = () => {
     <div className={styles.chatContainer}>
       <div className={styles.messages}>
         {messages.map((msg, index) => (
-          <Message key={index} role={msg.role} text={msg.text} />
+          <Message key={index} author={msg.author} content={msg.content} />
         ))}
         <div ref={messagesEndRef} />
       </div>
