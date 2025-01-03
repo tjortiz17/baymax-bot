@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./page.module.css"; // use simple styles for demonstration purposes
+import styles from "./page.module.css";
 import Chat from "./components/chat";
 
 const Home = () => {

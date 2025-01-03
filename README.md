@@ -1,6 +1,22 @@
-## Overview
+# Baymax Bot
 
-This project is an integration with Google's Gemini API and programmed to respond like the character Baymax from the movie Big Hero Six.
+A simple chatbot interface integrated with **Google Gemini** to emulate **Baymax** from the movie *Big Hero 6*. Chat with Baymax for friendly, caring, and helpful interactions, just like in the movie.
+
+### Demo
+Check out the live version: [Baymax Bot on Vercel](https://baymax-bot-theta.vercel.app/)
+
+## Project Description
+
+**Baymax Bot** is a fun and simple chatbot interface built using TypeScript, React, Next.js, and TailwindCSS, integrated with Google Gemini to mimic Baymax, the lovable healthcare companion from *Big Hero 6*. 
+
+You can chat with Baymax, ask questions, and experience the bot's friendly, compassionate responses, much like the character in the movie. The project aims to bring a touch of Baymax's charm to users while showcasing a clean, modern interface.
+
+## Features
+
+- **Chat with Baymax**: Engage in a conversation with a chatbot that mimics Baymax's character from *Big Hero 6*.
+- **Real-time messaging**: Responses from Baymax are generated instantly.
+- **Responsive Design**: Optimized for all screen sizes, ensuring a smooth experience on both mobile and desktop.
+- **Integrated with Google Gemini**: The conversational engine behind Baymax's responses.
 
 ## Quickstart Setup
 
@@ -33,8 +49,6 @@ npm run dev
 
 ### 5. Navigate to [http://localhost:3000](http://localhost:3000).
 
-## Deployment
+## License
 
-You can deploy this project to Vercel or any other platform that supports Next.js.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fopenai%2Fopenai-assistants-quickstart&env=OPENAI_API_KEY,OPENAI_ASSISTANT_ID&envDescription=API%20Keys%20and%20Instructions&envLink=https%3A%2F%2Fgithub.com%2Fopenai%2Fopenai-assistants-quickstart%2Fblob%2Fmain%2F.env.example)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
